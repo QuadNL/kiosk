@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiosk Startpagina</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; width: 80%; max-width: 1000px; }
+        .tile { background: white; padding: 40px; border-radius: 15px; text-align: center; text-decoration: none; color: #333; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s; border: 2px solid transparent; }
+        .tile:active { transform: scale(0.95); background: #e0e0e0; }
+        .tile i { font-size: 50px; display: block; margin-bottom: 10px; }
+        .tile span { font-weight: bold; font-size: 1.2rem; }
+        .header { position: absolute; top: 40px; font-size: 2rem; color: #1a73e8; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">Selecteer een applicatie</div>
+    <div class="container">
+        <a href="https://www.google.nl" class="tile"><i>🔍</i><span>Google</span></a>
+        <a href="https://www.nos.nl" class="tile"><i>📰</i><span>Nieuws</span></a>
+        <a href="https://www.office.com" class="tile"><i>🏢</i><span>Office 365</span></a>
+        <a href="https://www.wikipedia.org" class="tile"><i>📖</i><span>Wikipedia</span></a>
+    </div>
+</body>
+</html>

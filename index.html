@@ -12,40 +12,29 @@
             --text-secondary: #605e5c;
         }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f3f2f1; margin: 0; overflow: hidden; }
-        
-        /* Header met Logo en Klok */
         .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .logo { width: 150px; height: auto; object-fit: contain; }
-        
-        .date-time-wrapper { text-align: right; }
+        .date-time-wrapper { text-align: right; min-width: 300px; }
         #greeting { font-size: 1rem; color: var(--text-secondary); margin-bottom: 2px; }
         #clock { font-size: 1.8rem; font-weight: 600; color: var(--text-main); line-height: 1; }
-
-        /* Grid voor Apps */
         .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 40px; max-width: 1200px; margin: auto; }
-        
         .tile { background: white; padding: 30px; border-radius: 8px; text-align: center; text-decoration: none; color: var(--text-main); box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: 0.2s; border: 1px solid #edebe9; }
         .tile:active { background: #f3f2f1; transform: scale(0.98); }
         .tile i { font-size: 40px; display: block; margin-bottom: 15px; font-style: normal; }
         .tile span { font-weight: 600; }
-
-        /* Systeem Knoppen Balk */
         .system-bar { position: fixed; bottom: 0; width: 100%; background: #faf9f8; display: flex; justify-content: center; gap: 15px; padding: 20px 0; border-top: 1px solid #edebe9; }
         .btn-sys { padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; color: white; transition: 0.2s; font-family: inherit; }
-        
         .btn-logoff { background: #8e8e8e; }
         .btn-restart { background: var(--primary-color); }
         .btn-shutdown { background: var(--danger-color); }
-        
-        .btn-sys:active { opacity: 0.8; transform: scale(0.95); }
     </style>
 </head>
-<body>
+<body onload="updateClock()">
 
     <div class="top-bar">
         <img src="https://quadnl.github.io/kiosk/images/logo.png" class="logo" alt="Logo">
         <div class="date-time-wrapper">
-            <div id="greeting">Laden...</div>
+            <div id="greeting">Welkom</div>
             <div id="clock">00:00</div>
         </div>
     </div>
@@ -63,19 +52,32 @@
     </div>
 
     <script>
-        // Klok & Datum functie
         function updateClock() {
-            const now = new Date();
-            
-            // Begroeting bepalen
-            const hour = now.getHours();
-            let greeting = "Goedenacht";
-            if (hour >= 6 && hour < 12) greeting = "Goedemorgen";
-            else if (hour >= 12 && hour < 18) greeting = "Goedemiddag";
-            else if (hour >= 18) greeting = "Goedenavond";
+            try {
+                const now = new Date();
+                const hour = now.getHours();
+                
+                let greeting = "Goedenacht";
+                if (hour >= 6 && hour < 12) greeting = "Goedemorgen";
+                else if (hour >= 12 && hour < 18) greeting = "Goedemiddag";
+                else if (hour >= 18) greeting = "Goedenavond";
 
-            // Datum formatteren: maandag 16 maart 2026
-            const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-            const datumStr = now.toLocaleDateString('nl-NL', dateOptions);
-            
-            //
+                const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+                const datumStr = now.toLocaleDateString('nl-NL', dateOptions);
+                const tijdStr = now.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+
+                document.getElementById('greeting').innerText = greeting + ", het is vandaag " + datumStr;
+                document.getElementById('clock').innerText = tijdStr;
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        setInterval(updateClock, 10000);
+
+        function sysCmd(action) {
+            window.location.href = "kioskcmd:" + action;
+        }
+    </script>
+</body>
+</html>

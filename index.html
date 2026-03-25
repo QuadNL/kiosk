@@ -6,27 +6,28 @@
     <title>Kiosk Dashboard</title>
     <style>
         :root {
-            --primary-color: #0078d4;
-            --danger-color: #d83b01;
-            --text-main: #323130;
-            --text-secondary: #605e5c;
+            --primary-color: #3b82f6;
+            --bg-color: #f1f5f9;
+            --surface-color: #ffffff;
+            --text-main: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f3f2f1; margin: 0; overflow: hidden; }
-        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-color); margin: 0; overflow-y: auto; color: var(--text-main); }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: var(--surface-color); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .logo { width: 150px; height: auto; object-fit: contain; }
         .date-time-wrapper { text-align: right; min-width: 300px; }
         #greeting { font-size: 1rem; color: var(--text-secondary); margin-bottom: 2px; }
         #clock { font-size: 1.8rem; font-weight: 600; color: var(--text-main); line-height: 1; }
-        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 40px; max-width: 1200px; margin: auto; }
-        .tile { background: white; padding: 30px; border-radius: 8px; text-align: center; text-decoration: none; color: var(--text-main); box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: 0.2s; border: 1px solid #edebe9; }
-        .tile:active { background: #f3f2f1; transform: scale(0.98); }
-        .tile i { font-size: 40px; display: block; margin-bottom: 15px; font-style: normal; }
+        .dashboard { max-width: 1200px; margin: 40px auto; padding: 0 40px; }
+        .section-title { font-size: 1.4rem; color: var(--text-main); border-bottom: 2px solid var(--border-color); padding-bottom: 10px; margin-bottom: 20px; margin-top: 40px; }
+        .section-title:first-child { margin-top: 0; }
+        .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .tile { background: var(--surface-color); padding: 30px; border-radius: 12px; text-align: center; text-decoration: none; color: var(--text-main); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: all 0.2s ease; border: 1px solid var(--border-color); }
+        .tile:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-color: var(--primary-color); }
+        .tile:active { background: var(--bg-color); transform: translateY(0) scale(0.98); }
+        .tile img.tile-logo { width: 72px; height: 72px; object-fit: contain; margin: 0 auto 15px auto; display: block; }
         .tile span { font-weight: 600; }
-        .system-bar { position: fixed; bottom: 0; width: 100%; background: #faf9f8; display: flex; justify-content: center; gap: 15px; padding: 20px 0; border-top: 1px solid #edebe9; }
-        .btn-sys { padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; color: white; transition: 0.2s; font-family: inherit; }
-        .btn-logoff { background: #8e8e8e; }
-        .btn-restart { background: var(--primary-color); }
-        .btn-shutdown { background: var(--danger-color); }
     </style>
 </head>
 <body onload="updateClock()">
@@ -39,17 +40,19 @@
         </div>
     </div>
 
-    <div class="container">
-        <a href="https://www.google.com" class="tile"><i>🔍</i><span>Zoeken</span></a>
-        <a href="https://www.office.com" class="tile"><i>📂</i><span>Office Portal</span></a>
-        <a href="https://www.microsoft.com" class="tile"><i>💻</i><span>Support</span></a>
-        <a href="calculator:" class="tile"><i>🧮</i><span>Open Calculator</span></a>
-    </div>
+    <div class="dashboard">
+        <h2 class="section-title">Mijn Werkplek</h2>
+        <div class="container">
+            <a href="https://outlook.office.com" class="tile" target="_blank" rel="noopener noreferrer"><img src="outlook-button-logo.png" alt="Outlook Logo" class="tile-logo"><span>Outlook Online</span></a>
+            <a href="https://office.com/launch/sharepoint" class="tile" target="_blank" rel="noopener noreferrer"><img src="sharepoint-button-logo.png" alt="SharePoint Logo" class="tile-logo"><span>SharePoint</span></a>
+        </div>
 
-    <div class="system-bar">
-        <button class="btn-sys btn-logoff" onclick="sysCmd('logoff')">Afmelden</button>
-        <button class="btn-sys btn-restart" onclick="sysCmd('restart')">Herstarten</button>
-        <button class="btn-sys btn-shutdown" onclick="sysCmd('shutdown')">Afsluiten</button>
+        <h2 class="section-title">Nieuws & Actualiteiten</h2>
+        <div class="container">
+            <a href="https://nos.nl" class="tile" target="_blank" rel="noopener noreferrer"><img src="nos-button-logo.png" alt="NOS Logo" class="tile-logo"><span>NOS Nieuws</span></a>
+            <a href="https://nu.nl" class="tile" target="_blank" rel="noopener noreferrer"><img src="nu-button-logo.png" alt="NU.nl Logo" class="tile-logo"><span>NU.nl</span></a>
+            <a href="https://telegraaf.nl" class="tile" target="_blank" rel="noopener noreferrer"><img src="telegraaf-button-logo.png" alt="Telegraaf Logo" class="tile-logo"><span>De Telegraaf</span></a>
+        </div>
     </div>
 
     <script>
@@ -76,9 +79,6 @@
 
         setInterval(updateClock, 10000);
 
-        function sysCmd(action) {
-            window.location.href = "kioskcmd:" + action;
-        }
     </script>
 </body>
 </html>
